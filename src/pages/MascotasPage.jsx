@@ -27,6 +27,18 @@ function MascotasPage() {
         }
     }
 
+    const deleteMascota = async (id) => {
+        try {
+            const response = await mascotasApi.delete(`mascotas/${id}/`);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            fetchMascotas();
+        }
+
+    }
+
     useEffect(() => {
         fetchMascotas();
     }, [])
@@ -35,7 +47,7 @@ function MascotasPage() {
         <>
             <h1>Pagina Mascotas</h1>
 
-            <MascotasList lista={mascotasList} onAdd={addMascotas} />
+            <MascotasList lista={mascotasList} onAdd={addMascotas} onDelete={deleteMascota} />
 
             <Outlet />
         </>

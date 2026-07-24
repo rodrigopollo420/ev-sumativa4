@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MascotasForm from "./MascotasForm";
 
 
-function MascotasList({ lista, onAdd }) {
+function MascotasList({ lista, onAdd, onDelete }) {
 
 
 
@@ -23,6 +23,7 @@ function MascotasList({ lista, onAdd }) {
                         <p>Edad: {m.edad}</p>
                         <p>Raza: {m.raza}</p>
                         <Link to={`${m.id}`}>Ver mascota</Link>
+                        <button onClick={() => onDelete(m.id)} >Eliminar</button>
 
                     </div>
                 )
