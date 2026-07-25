@@ -11,7 +11,6 @@ function MascotasPage() {
     const fetchMascotas = async () => {
         try {
             const response = await mascotasApi.get('mascotas/');
-            console.log(response.data);
             setMascotasList(response.data);
         } catch (error) {
             setError(obtenerMensajeError(error));
@@ -20,8 +19,7 @@ function MascotasPage() {
 
     const addMascotas = async (mascota) => {
         try {
-            const response = await mascotasApi.post('mascotas/', mascota);
-            console.log(response);
+            await mascotasApi.post('mascotas/', mascota);
             setError(null);
         } catch (error) {
             setError(obtenerMensajeError(error));
@@ -32,8 +30,7 @@ function MascotasPage() {
 
     const deleteMascota = async (id) => {
         try {
-            const response = await mascotasApi.delete(`mascotas/${id}/`);
-            console.log(response);
+            await mascotasApi.delete(`mascotas/${id}/`);
             setError(null);
         } catch (error) {
             setError(obtenerMensajeError(error));
