@@ -7,7 +7,6 @@ import { obtenerMensajeError } from "../../utilidades/manejoErrores";
 
 function MascotasDetail() {
     const { id } = useParams();
-    console.log(id);
     const [fetchError, setFetchError] = useState(null);
     const [mascota, setMascota] = useState(null);
     const [errorComentario, setErrorComentario] = useState(null);
