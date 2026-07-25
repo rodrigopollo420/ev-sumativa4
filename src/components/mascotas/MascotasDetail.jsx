@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import mascotasApi from "../../api/api";
 import { useEffect, useState } from "react";
 import ComentariosList from "../comentarios/ComentariosList";
+import ComentariosForm from "../comentarios/ComentariosForm";
 
 function MascotasDetail() {
     const { id } = useParams();
@@ -17,6 +18,16 @@ function MascotasDetail() {
         } catch (error) {
             console.log(error);
             setFetchError(true);
+        }
+    }
+
+    const agregarComentario = async ({ autor, contenido }) => {
+        try {
+            await mascotasApi.post(`mascotas/${id}/comentar/`, { autor, contenido });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            fetchMascotaDetail();
         }
     }
 
@@ -38,6 +49,7 @@ function MascotasDetail() {
 
                     <h3>Comentarios</h3>
                     <ComentariosList comentarios={mascota?.comentarios ?? []} />
+                    <ComentariosForm onAdd={agregarComentario} />
                 </>
             )}
         </div>
