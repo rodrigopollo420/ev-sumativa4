@@ -40,6 +40,17 @@ function MascotasPage() {
 
     }
 
+    const updateEstadoMascota = async (id, nuevoEstado) => {
+        try {
+            await mascotasApi.patch(`mascotas/${id}/`, {estado: nuevoEstado});
+            setError(null);
+        } catch (error) {
+            setError(obtenerMensajeError(error));
+        } finally {
+            fetchMascotas();
+        }
+    }
+
     useEffect(() => {
         fetchMascotas();
     }, [])
@@ -50,7 +61,7 @@ function MascotasPage() {
 
             {error && <p style={{color: "red"}}>{error}</p>}
 
-            <MascotasList lista={mascotasList} onAdd={addMascotas} onDelete={deleteMascota} />
+            <MascotasList lista={mascotasList} onAdd={addMascotas} onDelete={deleteMascota} onUpdateEstado={updateEstadoMascota}/>
 
             <Outlet />
         </>
