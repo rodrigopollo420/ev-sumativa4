@@ -43,6 +43,17 @@ function MascotasDetail() {
         }
     }
 
+    const editarComentario = async (comentarioId, nuevoContenido) => {
+        try {
+            await mascotasApi.patch(`comentarios/${comentarioId}/`, { contenido: nuevoContenido});
+            setErrorComentario(null);
+        } catch (error) {
+            setErrorComentario(obtenerMensajeError(error));
+        } finally {
+            fetchMascotaDetail();
+        }
+    }
+
     useEffect(() => {
         fetchMascotaDetail();
     }, []);
@@ -64,6 +75,7 @@ function MascotasDetail() {
                     <ComentariosList
                         comentarios={mascota?.comentarios ?? []}
                         onEliminar={eliminarComentario}
+                        onEditar={editarComentario}
                     />
                     <ComentariosForm onAdd={agregarComentario} />
                 </>
