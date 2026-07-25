@@ -8,18 +8,17 @@ import { obtenerMensajeError } from "../../utilidades/manejoErrores";
 function MascotasDetail() {
     const { id } = useParams();
     console.log(id);
-    const [fetchError, setFetchError] = useState(false);
+    const [fetchError, setFetchError] = useState(null);
     const [mascota, setMascota] = useState(null);
     const [errorComentario, setErrorComentario] = useState(null);
 
     const fetchMascotaDetail = async () => {
         try {
             const response = await mascotasApi.get(`mascotas/${id}/`);
-            console.log(response.data);
             setMascota(response.data);
+            setFetchError(null);
         } catch (error) {
-            console.log(error);
-            setFetchError(true);
+            setFetchError(obtenerMensajeError(error));
         }
     }
 
@@ -52,7 +51,7 @@ function MascotasDetail() {
     return (
         <div>
             {fetchError ? (
-                <p>404 - Mascota no encontrada</p>
+                <p>{fetchError}</p>
             ) : (
                 <>
                     <h2>{mascota?.nombre}</h2>
