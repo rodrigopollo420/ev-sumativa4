@@ -3,12 +3,14 @@ import mascotasApi from "../../api/api";
 import { useEffect, useState } from "react";
 import ComentariosList from "../comentarios/ComentariosList";
 import ComentariosForm from "../comentarios/ComentariosForm";
+import { obtenerMensajeError } from "../../utilidades/manejoErrores";
 
 function MascotasDetail() {
     const { id } = useParams();
     console.log(id);
     const [fetchError, setFetchError] = useState(false);
     const [mascota, setMascota] = useState(null);
+    const [errorComentario, setErrorComentario] = useState(null);
 
     const fetchMascotaDetail = async () => {
         try {
@@ -24,8 +26,9 @@ function MascotasDetail() {
     const agregarComentario = async ({ autor, contenido }) => {
         try {
             await mascotasApi.post(`mascotas/${id}/comentar/`, { autor, contenido });
+            setErrorComentario(null);
         } catch (error) {
-            console.log(error);
+            setErrorComentario(obtenerMensajeError(error));
         } finally {
             fetchMascotaDetail();
         }
@@ -34,8 +37,9 @@ function MascotasDetail() {
     const eliminarComentario = async (comentarioId) => {
         try {
             await mascotasApi.delete(`comentarios/${comentarioId}/`);
+            setErrorComentario(null)
         } catch (error) {
-            console.log(error);
+            setErrorComentario(obtenerMensajeError(error));
         } finally {
             fetchMascotaDetail();
         }
@@ -58,6 +62,7 @@ function MascotasDetail() {
                     <p>Raza: {mascota?.raza}</p>
 
                     <h3>Comentarios</h3>
+                    {errorComentario && <p>{errorComentario}</p>}
                     <ComentariosList
                         comentarios={mascota?.comentarios ?? []}
                         onEliminar={eliminarComentario}
