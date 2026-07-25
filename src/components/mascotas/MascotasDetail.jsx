@@ -31,6 +31,16 @@ function MascotasDetail() {
         }
     }
 
+    const eliminarComentario = async (comentarioId) => {
+        try {
+            await mascotasApi.delete(`comentarios/${comentarioId}/`);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            fetchMascotaDetail();
+        }
+    }
+
     useEffect(() => {
         fetchMascotaDetail();
     }, []);
@@ -48,7 +58,10 @@ function MascotasDetail() {
                     <p>Raza: {mascota?.raza}</p>
 
                     <h3>Comentarios</h3>
-                    <ComentariosList comentarios={mascota?.comentarios ?? []} />
+                    <ComentariosList
+                        comentarios={mascota?.comentarios ?? []}
+                        onEliminar={eliminarComentario}
+                    />
                     <ComentariosForm onAdd={agregarComentario} />
                 </>
             )}
