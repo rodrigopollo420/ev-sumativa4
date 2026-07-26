@@ -26,6 +26,8 @@ function MascotasDetail() {
     const [tamanoEdit, setTamanoEdit] = useState("");
     const [estadoEdit, setEstadoEdit] =useState("");
 
+    const [errorEdicionMascota, setErrorEdicionMascota] = useState(null); 
+
     const fetchMascotaDetail = async () => {
         try {
             const response = await mascotasApi.get(`mascotas/${id}/`);
@@ -97,6 +99,33 @@ function MascotasDetail() {
         setEditandoMascota(false)
     }
 
+    const buscarLabel = (lista, valor) => {
+        const encontrado = lista.find((item) => item.value === valor);
+        return encontrado ? encontrado.label :valor;
+    }
+
+    const guardarEdicionMascota = async () => {
+        try {
+            await mascotasApi.patch(`mascotas/${id}/`, {
+                nombre: nombreEdit,
+                descripcion: descripcionEdit,
+                edad: edadEdit ==="" ? null: edadEdit,
+                raza: razaEdit,
+                tipo_animal: tipoAnimalEdit,
+                sexo: sexoEdit,
+                tamano: tamanoEdit,
+                estado: estadoEdit,
+
+            });
+            setEditandoMascota(false);
+            setErrorEdicionMascota(null);
+        } catch (error) {
+            setErrorEdicionMascota(obtenerMensajeError(error));
+        } finally {
+            fetchMascotaDetail();
+        }
+    }
+
     useEffect(() => {
         fetchMascotaDetail();
         fetchChoices();
@@ -106,20 +135,68 @@ function MascotasDetail() {
         <div>
             {fetchError ? (
                 <p>{fetchError}</p>
-            ) : (
+            ) : ( 
                 <>
-                    <h2>{mascota?.nombre}</h2>
                     <img src={mascota?.imagen} alt={mascota?.nombre} />
-                    <p>{mascota?.descripcion}</p>
-                    <p>Edad: {mascota?.edad}</p>
-                    <p>Raza: {mascota?.raza}</p>
-                    <p>Tipo De Animal: {mascota?.tipo_animal}</p>
-                    <p>Sexo: {mascota?.sexo}</p>
-                    <p>Tamaño: {mascota?.tamano}</p>
-                    <p>Estado: {mascota?.estado}</p>
 
-                    <button onClick={empezarEdicionMascota}>Editar Mascota</button>
+                    {errorEdicionMascota && <p>{errorEdicionMascota}</p>}
 
+                    {editandoMascota ? (
+                        <>
+                            <label>Nombre:
+                                <input type="text" value={nombreEdit} onChange={(e) => setNombreEdit(e.target.value)} />
+                            </label>
+                            <label>Descripcion:
+                                <textarea value={descripcionEdit} onChange={(e) => setDescripcionEdit(e.target.value)}></textarea>
+                            </label>
+                            <label>Edad:
+                                <input type="number" value={edadEdit} onChange={(e) => setEdadEdit(e.target.value)} />
+                            </label>
+                            <label>Raza:
+                                <input type="text" value={razaEdit} onChange={(e) => setRazaEdit(e.target.value)}/>
+                            </label>
+                            <label>Tipo de animal:
+                                <select value={tipoAnimalEdit} onChange={(e) => setTipoAnimalEdit(e.target.value)}>
+                                    {tipoMascota.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                </select>
+                            </label>
+                            <label>Sexo:
+                                <select value={sexoEdit} onChange={(e) => setSexoEdit(e.target.value)}>
+                                    {sexo.map((s) => <option value={s.value} key={s.value}>{s.label}</option> )}
+                                </select>
+                            </label>
+                            <label>Tamaño:
+                                <select value={tamanoEdit} onChange={(e) => setTamanoEdit(e.target.value)}>
+                                    {tamano.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                </select>
+                            </label>
+                            <label>Estado:
+                                <select value={estadoEdit} onChange={(e) => setEstadoEdit(e.target.value)}>
+                                    {estados.map((e) => <option value={e.value} key={e.value}>{e.label}</option>)}
+                                </select>
+                            </label>
+
+                            <button onClick={guardarEdicionMascota}>Guardar</button>
+                            <button onClick={cancelarEdicionMascota}>Cancelar</button>
+
+                        </>
+
+                    ) : (
+                        <>
+                            <h2>{mascota?.nombre}</h2>
+                            <p>{mascota?.descripcion}</p>
+                            <p>Edad: {mascota?.edad}</p>
+                            <p>Raza: {mascota?.raza}</p>
+                            <p>Tipo De Animal: {buscarLabel(tipoMascota, mascota?.tipo_animal)}</p>
+                            <p>Sexo: {buscarLabel(sexo, mascota?.sexo)}</p>
+                            <p>Tamaño: {buscarLabel(tamano, mascota?.tamano)}</p>
+                            <p>Estado: {buscarLabel(estados, mascota?.estado)}</p>
+
+                            <button onClick={empezarEdicionMascota}>Editar Mascota</button>
+                        </>
+                    )}
+                   
+                    
                     <h3>Comentarios</h3>
                     {errorComentario && <p>{errorComentario}</p>}
                     <ComentariosList
