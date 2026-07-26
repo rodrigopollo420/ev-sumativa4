@@ -69,6 +69,10 @@ function MascotasDetail() {
                     <p>{mascota?.descripcion}</p>
                     <p>Edad: {mascota?.edad}</p>
                     <p>Raza: {mascota?.raza}</p>
+                    <p>Tipo De Animal: {mascota?.tipo_animal}</p>
+                    <p>Sexo: {mascota?.sexo}</p>
+                    <p>Tamaño: {mascota?.tamano}</p>
+                    <p>Estado: {mascota?.estado}</p>
 
                     <h3>Comentarios</h3>
                     {errorComentario && <p>{errorComentario}</p>}
