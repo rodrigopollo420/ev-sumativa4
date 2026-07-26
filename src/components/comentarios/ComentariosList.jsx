@@ -40,7 +40,7 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
                 <div
                     key={c.id}
                     className="p-2 rounded"
-                    style={{ backgroundColor : "var(--color-papel)", border: "1px solid var(--color-borde)"}}
+                    style={{ backgroundColor : "white", border: "1px solid var(--color-borde)"}}
                 >
                     {editandoId === c.id ?(
                         <>

@@ -14,7 +14,7 @@ function MascotasDetail() {
     const [estados, setEstados] = useState([]);
     const [tipoMascota, setTipoMascota] = useState([]);
     const [sexo, setSexo] = useState([])
-    const [tamano,setTamano] = useState([]);
+    const [tamano, setTamano] = useState([]);
 
     const [editandoMascota, setEditandoMascota] = useState(false);
     const [nombreEdit, setNombreEdit] = useState("");
@@ -24,9 +24,9 @@ function MascotasDetail() {
     const [tipoAnimalEdit, setTipoAnimalEdit] = useState("");
     const [sexoEdit, setSexoEdit] = useState("")
     const [tamanoEdit, setTamanoEdit] = useState("");
-    const [estadoEdit, setEstadoEdit] =useState("");
+    const [estadoEdit, setEstadoEdit] = useState("");
 
-    const [errorEdicionMascota, setErrorEdicionMascota] = useState(null); 
+    const [errorEdicionMascota, setErrorEdicionMascota] = useState(null);
 
     const fetchMascotaDetail = async () => {
         try {
@@ -74,7 +74,7 @@ function MascotasDetail() {
 
     const editarComentario = async (comentarioId, nuevoContenido) => {
         try {
-            await mascotasApi.patch(`comentarios/${comentarioId}/`, { contenido: nuevoContenido});
+            await mascotasApi.patch(`comentarios/${comentarioId}/`, { contenido: nuevoContenido });
             setErrorComentario(null);
         } catch (error) {
             setErrorComentario(obtenerMensajeError(error));
@@ -101,7 +101,7 @@ function MascotasDetail() {
 
     const buscarLabel = (lista, valor) => {
         const encontrado = lista.find((item) => item.value === valor);
-        return encontrado ? encontrado.label :valor;
+        return encontrado ? encontrado.label : valor;
     }
 
     const guardarEdicionMascota = async () => {
@@ -141,7 +141,7 @@ function MascotasDetail() {
         <div>
             {fetchError ? (
                 <p>{fetchError}</p>
-            ) : ( 
+            ) : (
                 <>
                     <img src={mascota?.imagen} alt={mascota?.nombre} />
 
@@ -159,7 +159,7 @@ function MascotasDetail() {
                                 <input type="number" value={edadEdit} onChange={(e) => setEdadEdit(e.target.value)} />
                             </label>
                             <label>Raza:
-                                <input type="text" value={razaEdit} onChange={(e) => setRazaEdit(e.target.value)}/>
+                                <input type="text" value={razaEdit} onChange={(e) => setRazaEdit(e.target.value)} />
                             </label>
                             <label>Tipo de animal:
                                 <select value={tipoAnimalEdit} onChange={(e) => setTipoAnimalEdit(e.target.value)}>
@@ -168,7 +168,7 @@ function MascotasDetail() {
                             </label>
                             <label>Sexo:
                                 <select value={sexoEdit} onChange={(e) => setSexoEdit(e.target.value)}>
-                                    {sexo.map((s) => <option value={s.value} key={s.value}>{s.label}</option> )}
+                                    {sexo.map((s) => <option value={s.value} key={s.value}>{s.label}</option>)}
                                 </select>
                             </label>
                             <label>Tamaño:
@@ -201,16 +201,26 @@ function MascotasDetail() {
                             <button onClick={empezarEdicionMascota}>Editar Mascota</button>
                         </>
                     )}
-                   
-                    
-                    <h3>Comentarios</h3>
-                    {errorComentario && <p>{errorComentario}</p>}
-                    <ComentariosList
-                        comentarios={mascota?.comentarios ?? []}
-                        onEliminar={eliminarComentario}
-                        onEditar={editarComentario}
-                    />
-                    <ComentariosForm onAdd={agregarComentario} />
+
+                    <div
+                        style={{
+                            backgroundColor: "var(--color-papel)",
+                            border: "3px solid var(--color-borde)",
+                            borderRadius: "6px",
+                            padding: "1.25rem",
+                        }}
+                    >
+                        <h3 style={{ fontFamily: "var(--font-display)", color: "var(--color-cinta)", textAlign: "center"}}>
+                            Comentarios
+                        </h3>
+                        {errorComentario && <p className="text-center" style={{ color: "var(--color-sello)"}}>{errorComentario}</p>}
+                        <ComentariosList
+                            comentarios={mascota?.comentarios ?? []}
+                            onEliminar={eliminarComentario}
+                            onEditar={editarComentario}
+                        />
+                        <ComentariosForm onAdd={agregarComentario} />
+                    </div>
                 </>
             )}
         </div>
