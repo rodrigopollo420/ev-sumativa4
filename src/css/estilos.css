@@ -129,3 +129,42 @@ body {
 .navbar-mascotas:hover {
     color: var(--color-cinta);
 }
+
+.formulario-registro {
+    background-color: var(--color-borde);
+    color: var(--color-papel);
+    border: 3px solid #4A331D;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.formulario-registro h3 {
+    font-family: var(--font-display);
+    text-align: center;
+    color: var(--color-papel);
+    margin-bottom: 1.25rem;
+}
+
+.formulario-registro label {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+}
+
+.btn-registrar {
+    background-color: var(--color-sello);
+    border-color: var(--color-sello);
+    color: var(--color-papel);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.btn-registrar:hover {
+    background-color: #A8371F;
+    border-color: #A8371F;
+    color: var(--color-papel);
+}

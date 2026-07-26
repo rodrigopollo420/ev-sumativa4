@@ -57,8 +57,6 @@ function MascotasPage() {
 
     return (
         <>
-            <h1>Pagina Mascotas</h1>
-
             {error && <p style={{color: "red"}}>{error}</p>}
 
             <MascotasList lista={mascotasList} onAdd={addMascotas} onDelete={deleteMascota} onUpdateEstado={updateEstadoMascota}/>

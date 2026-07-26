@@ -32,11 +32,11 @@ function MascotasList({ lista, onAdd, onDelete, onUpdateEstado }) {
 
     return (
         <div className="container py-4">
+            <MascotasForm onAdd={onAdd} />
+            
             <h2 className="text-center mb-4" style={{fontFamily: "var(--font-display)", color: "var(--color-papel)"}}>
                 Tablón de mascotas
             </h2>
-
-            <MascotasForm onAdd={onAdd} />
 
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
             {
