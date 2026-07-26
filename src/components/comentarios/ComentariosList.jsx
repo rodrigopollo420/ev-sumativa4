@@ -36,15 +36,11 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
             {comentarios.length === 0 && (
                 <p className="etiqueta-cuerpo mb-0">Sin comentarios por ahora</p>)}
 
-            {comentarios.map ((c) => (
-                <div
-                    key={c.id}
-                    className="p-2 rounded"
-                    style={{ backgroundColor : "white", border: "1px solid var(--color-borde)"}}
-                >
-                    {editandoId === c.id ?(
+            {comentarios.map((c) => (
+                <div key={c.id} className="border rounded bg-white p-2">
+                    {editandoId === c.id ? (
                         <>
-                            <textarea 
+                            <textarea
                                 className="form-control form-control-sm mb-2"
                                 value={textoEdicion}
                                 onChange={(e) => setTextoEdicion(e.target.value)}
@@ -56,15 +52,11 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
                         </>
                     ) : (
                         <>
-
                             <div className="d-flex justify-content-between align-items-baseline">
-
-                                <p className="mb-1" style={{ fontFamily : "var(--font-display)", color: "var(--color-cinta)"}}>
-                                    {c.autor}
-                                </p>
-                                <span className="etiqueta-cuerpo" style={{ fontSize: "0.7rem" }}>
+                                <p className="mb-1 fw-bold">{c.autor}</p>
+                                <small className="etiqueta-cuerpo">
                                     {formatearFecha(c.fecha_creacion)}
-                                </span>
+                                </small>
                             </div>
                             <p className="etiqueta-cuerpo mb-2">{c.contenido}</p>
                             <div className="d-flex gap-2">
@@ -73,12 +65,8 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
                             </div>
                         </>
                     )}
-
                 </div>
-               
             ))}
-
-
         </div>
     );
 }
