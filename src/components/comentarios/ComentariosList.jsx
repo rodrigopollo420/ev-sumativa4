@@ -37,7 +37,7 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
                 <p className="etiqueta-cuerpo mb-0">Sin comentarios por ahora</p>)}
 
             {comentarios.map((c) => (
-                <div key={c.id} className="border rounded bg-white p-2">
+                <div key={c.id} className="nota-comentario">
                     {editandoId === c.id ? (
                         <>
                             <textarea
@@ -53,7 +53,7 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
                     ) : (
                         <>
                             <div className="d-flex justify-content-between align-items-baseline">
-                                <p className="mb-1 fw-bold">{c.autor}</p>
+                                <p className="mb-1 autor-comentario">{c.autor}</p>
                                 <small className="etiqueta-cuerpo">
                                     {formatearFecha(c.fecha_creacion)}
                                 </small>

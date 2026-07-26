@@ -324,3 +324,16 @@ body {
     font-family: var(--font-cuerpo);
     font-size: 0.75rem;
 }
+
+.nota-comentario {
+    background-color: #F1E0A8;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    padding: 0.6rem 0.75rem;
+}
+
+.nota-comentario .autor-comentario {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--color-tinta);
+}
