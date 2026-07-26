@@ -11,6 +11,10 @@
     --font-mono: "Space Mono", monospace;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--color-panel);
     background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
@@ -167,4 +171,102 @@ body {
     background-color: #A8371F;
     border-color: #A8371F;
     color: var(--color-papel);
+}
+
+.carrusel-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.carrusel-flecha {
+    background: var(--color-borde);
+    color: var(--color-papel);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.carrusel-flecha:hover {
+    background: var(--color-sello);
+}
+
+.carrusel-tarjeta {
+    display: flex;
+    width: 100%;
+    max-width: 680px;
+    min-height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(
+        to right,
+        var(--color-papel) 0%,
+        var(--color-papel) 48%,
+        #7B5EA7 55%,
+        var(--color-panel) 68%,
+        var(--color-panel) 100%
+    );
+}
+
+.carrusel-texto {
+    flex: 1.4;
+    padding: 1.5rem;
+    color: var(--color-tinta);
+}
+
+.carrusel-texto h3 {
+    font-family: var(--font-display);
+    margin-bottom: 0.5rem;
+}
+
+.carrusel-texto p {
+    font-family: var(--font-cuerpo);
+    font-size: 0.9rem;
+}
+
+.carrusel-enlace {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #2874a6;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.carrusel-imagen {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+}
+
+.carrusel-puntos {
+    position: absolute;
+    margin-top: 210px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.carrusel-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(251, 247, 238, 0.4);
+    cursor: pointer;
+    padding: 0;
+}
+
+.carrusel-punto.activo {
+    background: var(--color-cinta);
 }
