@@ -104,6 +104,16 @@ function MascotasDetail() {
         return encontrado ? encontrado.label : valor;
     }
 
+    const claseSello = (estadoValor) => {
+    const mapa = {
+        perdida: "sello-danger",
+        encontrada: "sello-info",
+        en_adopcion: "sello-warning",
+        adoptada: "sello-success",
+    };
+    return mapa[estadoValor] ?? "sello-secondary";
+}
+
     const guardarEdicionMascota = async () => {
 
         if (edadEdit === "" || razaEdit === "") {
@@ -140,88 +150,110 @@ function MascotasDetail() {
     return (
         <div>
             {fetchError ? (
-                <p>{fetchError}</p>
+                <p className="etiqueta-cuerpo">{fetchError}</p>
             ) : (
-                <>
-                    <img src={mascota?.imagen} alt={mascota?.nombre} />
-
-                    {errorEdicionMascota && <p>{errorEdicionMascota}</p>}
-
-                    {editandoMascota ? (
-                        <>
-                            <label>Nombre:
-                                <input type="text" value={nombreEdit} onChange={(e) => setNombreEdit(e.target.value)} />
-                            </label>
-                            <label>Descripcion:
-                                <textarea value={descripcionEdit} onChange={(e) => setDescripcionEdit(e.target.value)}></textarea>
-                            </label>
-                            <label>Edad:
-                                <input type="number" value={edadEdit} onChange={(e) => setEdadEdit(e.target.value)} />
-                            </label>
-                            <label>Raza:
-                                <input type="text" value={razaEdit} onChange={(e) => setRazaEdit(e.target.value)} />
-                            </label>
-                            <label>Tipo de animal:
-                                <select value={tipoAnimalEdit} onChange={(e) => setTipoAnimalEdit(e.target.value)}>
-                                    {tipoMascota.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
-                                </select>
-                            </label>
-                            <label>Sexo:
-                                <select value={sexoEdit} onChange={(e) => setSexoEdit(e.target.value)}>
-                                    {sexo.map((s) => <option value={s.value} key={s.value}>{s.label}</option>)}
-                                </select>
-                            </label>
-                            <label>Tamaño:
-                                <select value={tamanoEdit} onChange={(e) => setTamanoEdit(e.target.value)}>
-                                    {tamano.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
-                                </select>
-                            </label>
-                            <label>Estado:
-                                <select value={estadoEdit} onChange={(e) => setEstadoEdit(e.target.value)}>
-                                    {estados.map((e) => <option value={e.value} key={e.value}>{e.label}</option>)}
-                                </select>
-                            </label>
-
-                            <button onClick={guardarEdicionMascota}>Guardar</button>
-                            <button onClick={cancelarEdicionMascota}>Cancelar</button>
-
-                        </>
-
-                    ) : (
-                        <>
-                            <h2>{mascota?.nombre}</h2>
-                            <p>{mascota?.descripcion}</p>
-                            <p>Edad: {mascota?.edad}</p>
-                            <p>Raza: {mascota?.raza}</p>
-                            <p>Tipo De Animal: {buscarLabel(tipoMascota, mascota?.tipo_animal)}</p>
-                            <p>Sexo: {buscarLabel(sexo, mascota?.sexo)}</p>
-                            <p>Tamaño: {buscarLabel(tamano, mascota?.tamano)}</p>
-                            <p>Estado: {buscarLabel(estados, mascota?.estado)}</p>
-
-                            <button onClick={empezarEdicionMascota}>Editar Mascota</button>
-                        </>
-                    )}
-
-                    <div
-                        style={{
-                            backgroundColor: "var(--color-papel)",
-                            border: "3px solid var(--color-borde)",
-                            borderRadius: "6px",
-                            padding: "1.25rem",
-                        }}
-                    >
-                        <h3 style={{ fontFamily: "var(--font-display)", color: "var(--color-cinta)", textAlign: "center"}}>
-                            Comentarios
-                        </h3>
-                        {errorComentario && <p className="text-center" style={{ color: "var(--color-sello)"}}>{errorComentario}</p>}
-                        <ComentariosList
-                            comentarios={mascota?.comentarios ?? []}
-                            onEliminar={eliminarComentario}
-                            onEditar={editarComentario}
-                        />
-                        <ComentariosForm onAdd={agregarComentario} />
+                <div className="row g-4 align-items-start">
+                    <div className="col-lg-4">
+                        <div className="volante h-100">
+                            <h3 className="text-center">Comentarios</h3>
+                            {errorComentario && <p className="etiqueta-cuerpo text-center">{errorComentario}</p>}
+                            <ComentariosList
+                                comentarios={mascota?.comentarios ?? []}
+                                onEliminar={eliminarComentario}
+                                onEditar={editarComentario}
+                            />
+                            <ComentariosForm onAdd={agregarComentario} />
+                        </div>
                     </div>
-                </>
+
+                    <div className="col-lg-4">
+                        <div className="volante h-100 text-center">
+                            {editandoMascota ? (
+                                <input
+                                    type="text"
+                                    className="form-control text-center mb-3"
+                                    value={nombreEdit}
+                                    onChange={(e) => setNombreEdit(e.target.value)}
+                                />
+                            ) : (
+                                <h2>{mascota?.nombre}</h2>
+                            )}
+
+                            <img
+                                src={mascota?.imagen}
+                                alt={mascota?.nombre}
+                                className="img-fluid rounded mb-3"
+                            />
+
+                            {editandoMascota ? (
+                                <textarea
+                                    className="form-control"
+                                    value={descripcionEdit}
+                                    onChange={(e) => setDescripcionEdit(e.target.value)}
+                                />
+                            ) : (
+                                <p className="etiqueta-cuerpo">{mascota?.descripcion}</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="col-lg-4">
+                        <div className="volante h-100">
+                            <h3 className="text-center">Detalles</h3>
+                            {errorEdicionMascota && <p className="etiqueta-cuerpo text-center">{errorEdicionMascota}</p>}
+
+                            {editandoMascota ? (
+                                <>
+                                    <label className="etiqueta-cuerpo d-block mb-2">Edad:
+                                        <input type="number" className="form-control form-control-sm mt-1" value={edadEdit} onChange={(e) => setEdadEdit(e.target.value)} />
+                                    </label>
+                                    <label className="etiqueta-cuerpo d-block mb-2">Raza:
+                                        <input type="text" className="form-control form-control-sm mt-1" value={razaEdit} onChange={(e) => setRazaEdit(e.target.value)} />
+                                    </label>
+                                    <label className="etiqueta-cuerpo d-block mb-2">Tipo de animal:
+                                        <select className="form-select form-select-sm mt-1" value={tipoAnimalEdit} onChange={(e) => setTipoAnimalEdit(e.target.value)}>
+                                            {tipoMascota.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                        </select>
+                                    </label>
+                                    <label className="etiqueta-cuerpo d-block mb-2">Sexo:
+                                        <select className="form-select form-select-sm mt-1" value={sexoEdit} onChange={(e) => setSexoEdit(e.target.value)}>
+                                            {sexo.map((s) => <option value={s.value} key={s.value}>{s.label}</option>)}
+                                        </select>
+                                    </label>
+                                    <label className="etiqueta-cuerpo d-block mb-2">Tamaño:
+                                        <select className="form-select form-select-sm mt-1" value={tamanoEdit} onChange={(e) => setTamanoEdit(e.target.value)}>
+                                            {tamano.map((t) => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                        </select>
+                                    </label>
+                                    <label className="etiqueta-cuerpo d-block mb-3">Estado:
+                                        <select className="form-select form-select-sm mt-1" value={estadoEdit} onChange={(e) => setEstadoEdit(e.target.value)}>
+                                            {estados.map((e) => <option value={e.value} key={e.value}>{e.label}</option>)}
+                                        </select>
+                                    </label>
+
+                                    <div className="d-flex gap-2">
+                                        <button className="btn-registrar btn btn-sm" onClick={guardarEdicionMascota}>Guardar</button>
+                                        <button className="btn btn-outline-secondary btn-sm" onClick={cancelarEdicionMascota}>Cancelar</button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="etiqueta-cuerpo mb-2">Edad: {mascota?.edad}</p>
+                                    <p className="etiqueta-cuerpo mb-2">Raza: {mascota?.raza}</p>
+                                    <p className="etiqueta-cuerpo mb-2">Tipo De Animal: {buscarLabel(tipoMascota, mascota?.tipo_animal)}</p>
+                                    <p className="etiqueta-cuerpo mb-2">Sexo: {buscarLabel(sexo, mascota?.sexo)}</p>
+                                    <p className="etiqueta-cuerpo mb-2">Tamaño: {buscarLabel(tamano, mascota?.tamano)}</p>
+                                    <p className="etiqueta-cuerpo mb-3">
+                                        Estado: <span className={`sello ${claseSello(mascota?.estado)}`}>{buscarLabel(estados, mascota?.estado)}</span>
+                                    </p>
+
+                                    <button className="btn-registrar btn btn-sm" onClick={empezarEdicionMascota}>Editar Mascota</button>
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
             )}
         </div>
     )
