@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import mascotasApi from "../api/api";
 import { Outlet } from "react-router-dom";
 import { obtenerMensajeError } from "../utilidades/manejoErrores";
+import CarruselTarjetas from "../components/CarruselTarjetas";
 
 function MascotasPage() {
     const [mascotasList, setMascotasList] = useState([]);
@@ -57,6 +58,10 @@ function MascotasPage() {
 
     return (
         <>
+            <div className="hero-mascotas">
+                <h1>Página Mascotas</h1>
+                <CarruselTarjetas />
+            </div>
             {error && <p style={{color: "red"}}>{error}</p>}
 
             <MascotasList lista={mascotasList} onAdd={addMascotas} onDelete={deleteMascota} onUpdateEstado={updateEstadoMascota}/>
