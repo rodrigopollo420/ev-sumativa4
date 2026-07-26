@@ -20,13 +20,12 @@ function MascotasForm({ onAdd }) {
     const fetchChoices = async () => {
         try {
             const response = await mascotasApi.get("choices/");
-            console.log(response.data.estado);
             setEstados(response.data.estado);
             setTipoMascota(response.data.tipo_animal);
             setSexo(response.data.sexo);
             setTamano(response.data.tamano);
         } catch (error) {
-            console.log(error)
+
         }
     }
 
@@ -36,8 +35,6 @@ function MascotasForm({ onAdd }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(nombre, descripcion, edad, raza, selectedEstado, selectedTipoMascota, selectedSexo, selectedTamano, imagen);
-        console.log(imagen);
         
         const formData = new FormData();
         formData.append("nombre", nombre);
