@@ -1,0 +1,91 @@
+:root {
+    --color-panel: #2F4538;
+    --color-papel: #FBF7EE;
+    --color-tinta: #2B2620;
+    --color-sello: #C1432A;
+    --color-cinta: #E8B94B;
+
+    --font-display: "Kalam", cursive;
+    --font-cuerpo: "Work Sans", sans-serif;
+    --font-mono: "Space Mono", monospace;
+}
+
+body {
+    background-color: var(--color-panel);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+    font-family: var(--font-cuerpo);
+    color: var(--color-tinta);
+    min-height: 100vh;
+}
+
+.volante {
+    background-color: var(--color-papel);
+    border-radius: 3px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    padding: 1.5rem 1.25rem 1.25rem;
+    position: relative;
+    transform: rotate(var(--rot, 1deg));
+    transition: transform 0.2s ease box-shadow 0.2s ease;
+}
+
+.volante:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
+}
+
+.volante::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #f2f2f2, #7a7a7a 75%);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.volante:nth-child(4n) { --rot: 1.4deg; }
+.volante:nth-child(4n + 1) { --rot: -1.1deg; }
+.volante:nth-child(4n + 2) { --rot: 0.7deg; }
+.volante:nth-child(4n + 3) { --rot: -0.5deg; }
+
+.volante h2,
+.volante h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-cinta);
+}
+
+.sello {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 2px solid var(--color-sello);
+    color: var(--color-sello);
+    padding: 0.2 rem 0.55rem;
+    display: inline-block;
+    transform: rotate(-6deg);
+    border-radius: 4px;
+    background: transparent;
+    opacity: 0.9;
+}
+
+.sello-danger { border-color: #c0392b; color: #c0392b; }
+.sello-warning { border-color: #b8860b; color: #b8860b; }
+.sello-info { border-color: #2874a6; color: #2874a6; }
+.sello-success { border-color: #1e8449; color: #1e8449; }
+.sello-secondary { border-color: #6c757d; color: #6c757d; }
+
+.etiqueta-cuerpo {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-tinta);
+    opacity: 0.75;
+}
