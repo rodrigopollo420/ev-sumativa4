@@ -337,3 +337,19 @@ body {
     font-size: 1.05rem;
     color: var(--color-tinta);
 }
+
+.barra-filtros {
+    background-color: var(--color-borde);
+    color: var(--color-papel);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.barra-filtros label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+}

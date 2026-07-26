@@ -10,12 +10,27 @@ const colorPorEstado = {
     adoptada: "success",
 }
 
+const normalizar = (texto) => texto.trim().toLowerCase();
+
 function MascotasList({ lista, onAdd, onDelete, onUpdateEstado }) {
     const [estados, setEstados] = useState([]);
-    const fetchEstados = async () => {
+    const [tipoMascota, setTipoMascota] = useState([]);
+    const [sexo, setSexo] = useState([]);
+    const [tamano, setTamano] = useState([]);
+
+    const [busqueda, setBusqueda] = useState("");
+    const [filtroEstado, setFiltroEstado] = useState("");
+    const [filtroTipo, setFiltroTipo] = useState("");
+    const [filtroSexo, setFiltroSexo] = useState("");
+    const [filtroTamano, setFiltroTamano] = useState("");
+
+    const fetchChoices = async () => {
         try {
             const response = await mascotasApi.get("choices/");
             setEstados(response.data.estado);
+            setTipoMascota(response.data.tipo_animal);
+            setSexo(response.data.sexo);
+            setTamano(response.data.tamano);
         } catch (error) {
             console.log(error);
         }
@@ -27,8 +42,17 @@ function MascotasList({ lista, onAdd, onDelete, onUpdateEstado }) {
     }
 
     useEffect(() => {
-        fetchEstados();
+        fetchChoices();
     }, [])
+
+    const listaFiltrada = lista.filter(m => {
+        const coincideNombre = normalizar(m.nombre ?? "").includes(normalizar(busqueda));
+        const coincideEstado = filtroEstado === "" || m.estado === filtroEstado;
+        const coincideTipo = filtroTipo === "" || m.tipo_animal === filtroTipo;
+        const coincideSexo = filtroSexo === "" || m.sexo === filtroSexo;
+        const coincideTamano = filtroTamano === "" || m.tamano === filtroTamano;
+        return coincideNombre && coincideEstado && coincideTipo && coincideSexo && coincideTamano;
+    });
 
     return (
         <div id="formulario-registro" className="container py-4">
@@ -39,9 +63,63 @@ function MascotasList({ lista, onAdd, onDelete, onUpdateEstado }) {
                     Tablón de mascotas
                 </h2>
 
+                <div className="barra-filtros">
+                    <div className="row g-3">
+                        <div className="col-md-4">
+                            <label>Buscar por nombre
+                                <input 
+                                    type="text" 
+                                    className="form-control form-control-sm mt-1"
+                                    value={busqueda}
+                                    onChange={(e) => setBusqueda(e.target.value)}
+                                    placeholder="Ej: Firulais"
+                                />
+                            </label>
+                        </div>
+                        <div className="col-md-2">
+                            <label>Estado
+                                <select className="form-select form-select-sm mt-1" value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
+                                    <option value="">Todos</option>
+                                    {estados.map(e => <option value={e.value} key={e.value}>{e.label}</option>)}
+                                </select>
+                            </label>
+                        </div>
+                        <div className="col-md-2">
+                            <label>Tipo de animal
+                                <select className="form-select form-select-sm mt-1" value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)}>
+                                    <option value="">Todos</option>
+                                    {tipoMascota.map(t => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                </select>
+                            </label>
+                        </div>
+                        <div className="col-md-2">
+                            <label>Sexo
+                                <select className="form-select form-select-sm mt-1" value={filtroSexo} onChange={(e) => setFiltroSexo(e.target.value)}>
+                                    <option value="">Todos</option>
+                                    {sexo.map(s => <option value={s.value} key={s.value}>{s.label}</option>)}
+                                </select>
+                            </label>
+                        </div>
+                        <div className="col-md-2">
+                            <label>Tamaño
+                                <select className="form-select form-select-sm mt-1" value={filtroTamano} onChange={(e) => setFiltroTamano(e.target.value)}>
+                                    <option value="">Todos</option>
+                                    {tamano.map(t => <option value={t.value} key={t.value}>{t.label}</option>)}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {listaFiltrada.length === 0 && (
+                    <p className="text-center etiqueta-cuerpo" style={{ color: "var(--color-papel)"}}>
+                        No se encontraron mascotas con esos filtros.
+                    </p>
+                )}
+
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
                 {
-                    lista.map(m =>
+                    listaFiltrada.map(m =>
                     (
                         <div className="col" key={m.id}>
                             <div className="volante">
