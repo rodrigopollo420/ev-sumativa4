@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import mascotasApi from "../../api/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ComentariosList from "../comentarios/ComentariosList";
 import ComentariosForm from "../comentarios/ComentariosForm";
 import { obtenerMensajeError } from "../../utilidades/manejoErrores";
@@ -28,7 +28,7 @@ function MascotasDetail() {
 
     const [errorEdicionMascota, setErrorEdicionMascota] = useState(null);
 
-    const fetchMascotaDetail = async () => {
+    const fetchMascotaDetail = useCallback(async () => {
         try {
             const response = await mascotasApi.get(`mascotas/${id}/`);
             setMascota(response.data);
@@ -36,7 +36,7 @@ function MascotasDetail() {
         } catch (error) {
             setFetchError(obtenerMensajeError(error));
         }
-    }
+    }, [id]);
 
     const fetchChoices = async () => {
         try {
@@ -135,7 +135,7 @@ function MascotasDetail() {
     useEffect(() => {
         fetchMascotaDetail();
         fetchChoices();
-    }, []);
+    }, [fetchMascotaDetail]);
 
     return (
         <div>
