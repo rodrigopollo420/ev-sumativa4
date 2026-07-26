@@ -112,3 +112,20 @@ body {
     color: var(--color-tinta);
     opacity: 0.75;
 }
+
+.navbar-mascotas {
+    display: block;
+    background-color: var(--color-borde);
+    color: var(--color-papel);
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1rem;
+    border-bottom: 4px solid var(--color-cinta);
+}
+
+.navbar-mascotas:hover {
+    color: var(--color-cinta);
+}

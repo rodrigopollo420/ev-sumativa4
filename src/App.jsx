@@ -9,7 +9,7 @@ function App() {
     <>
       <Router>
         <nav>
-          <NavLink to={"/mascotas"}>Mascotas</NavLink>
+          <NavLink to={"/mascotas"} className="navbar-mascotas">Mascotas Perdidas</NavLink>
         </nav>
 
         <Routes>
