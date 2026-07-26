@@ -20,31 +20,62 @@ function ComentariosList({ comentarios,onEliminar, onEditar}) {
         setTextoEdicion("");    
     }
 
+    const formatearFecha = (fechaISO) => {
+        const fecha = new Date(fechaISO);
+        return fecha.toLocaleString("es-CL", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+
     return (
-        <div>
-            {comentarios.length === 0 && <p>Sin comentarios por ahora</p>}
+        <div className="d-flex flex-column gap-2">
+            {comentarios.length === 0 && (
+                <p className="etiqueta-cuerpo mb-0">Sin comentarios por ahora</p>)}
 
             {comentarios.map ((c) => (
-                <p key={c.id}>
-                    <strong>{c.autor}:</strong>{" "}
-                    {editandoId === c.id ? (
+                <div
+                    key={c.id}
+                    className="p-2 rounded"
+                    style={{ backgroundColor : "var(--color-papel)", border: "1px solid var(--color-borde)"}}
+                >
+                    {editandoId === c.id ?(
                         <>
-                        
                             <textarea 
+                                className="form-control form-control-sm mb-2"
                                 value={textoEdicion}
                                 onChange={(e) => setTextoEdicion(e.target.value)}
                             />
-                            <button onClick={() => guardarEdicion(c.id) }>Guardar</button>
-                            <button onClick={cancelarEdicion}>Cancelar</button>
+                            <div className="d-flex gap-2">
+                                <button className="btn btn-outline-dark btn-sm" onClick={() => guardarEdicion(c.id)}>Guardar</button>
+                                <button className="btn btn-outline-secondary btn-sm" onClick={cancelarEdicion}>Cancelar</button>
+                            </div>
                         </>
-                    ) :(
+                    ) : (
                         <>
-                        {c.contenido}
-                        <button onClick={() => empezarEdicion(c)}>Editar</button>
-                        <button onClick={() => onEliminar(c.id)}>Eliminar</button>
+
+                            <div className="d-flex justify-content-between align-items-baseline">
+
+                                <p className="mb-1" style={{ fontFamily : "var(--font-display)", color: "var(--color-cinta)"}}>
+                                    {c.autor}
+                                </p>
+                                <span className="etiqueta-cuerpo" style={{ fontSize: "0.7rem" }}>
+                                    {formatearFecha(c.fecha_creacion)}
+                                </span>
+                            </div>
+                            <p className="etiqueta-cuerpo mb-2">{c.contenido}</p>
+                            <div className="d-flex gap-2">
+                                <button className="btn btn-outline-dark btn-sm" onClick={() => empezarEdicion(c)}>Editar</button>
+                                <button className="btn btn-outline-danger btn-sm" onClick={() => onEliminar(c.id)}>Eliminar</button>
+                            </div>
                         </>
                     )}
-                </p>                
+
+                </div>
+               
             ))}
 
 
