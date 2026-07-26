@@ -11,6 +11,21 @@ function MascotasDetail() {
     const [mascota, setMascota] = useState(null);
     const [errorComentario, setErrorComentario] = useState(null);
 
+    const [estados, setEstados] = useState([]);
+    const [tipoMascota, setTipoMascota] = useState([]);
+    const [sexo, setSexo] = useState([])
+    const [tamano,setTamano] = useState([]);
+
+    const [editandoMascota, setEditandoMascota] = useState(false);
+    const [nombreEdit, setNombreEdit] = useState("");
+    const [descripcionEdit, setDescripcionEdit] = useState("");
+    const [edadEdit, setEdadEdit] = useState("");
+    const [razaEdit, setRazaEdit] = useState("");
+    const [tipoAnimalEdit, setTipoAnimalEdit] = useState("");
+    const [sexoEdit, setSexoEdit] = useState("")
+    const [tamanoEdit, setTamanoEdit] = useState("");
+    const [estadoEdit, setEstadoEdit] =useState("");
+
     const fetchMascotaDetail = async () => {
         try {
             const response = await mascotasApi.get(`mascotas/${id}/`);
@@ -18,6 +33,18 @@ function MascotasDetail() {
             setFetchError(null);
         } catch (error) {
             setFetchError(obtenerMensajeError(error));
+        }
+    }
+
+    const fetchChoices = async () => {
+        try {
+            const response = await mascotasApi.get("choices/");
+            setEstados(response.data.estado);
+            setTipoMascota(response.data.tipo_animal);
+            setSexo(response.data.sexo);
+            setTamano(response.data.tamano);
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -54,8 +81,25 @@ function MascotasDetail() {
         }
     }
 
+    const empezarEdicionMascota = () => {
+        setNombreEdit(mascota?.nombre ?? "");
+        setDescripcionEdit(mascota?.descripcion ?? "");
+        setEdadEdit(mascota?.edad ?? "");
+        setRazaEdit(mascota?.raza ?? "");
+        setTipoAnimalEdit(mascota?.tipo_animal ?? "");
+        setSexoEdit(mascota?.sexo ?? "");
+        setTamanoEdit(mascota?.tamano ?? "");
+        setEstadoEdit(mascota?.estado ?? "");
+        setEditandoMascota(true);
+    }
+
+    const cancelarEdicionMascota = () => {
+        setEditandoMascota(false)
+    }
+
     useEffect(() => {
         fetchMascotaDetail();
+        fetchChoices();
     }, []);
 
     return (
@@ -73,6 +117,8 @@ function MascotasDetail() {
                     <p>Sexo: {mascota?.sexo}</p>
                     <p>Tamaño: {mascota?.tamano}</p>
                     <p>Estado: {mascota?.estado}</p>
+
+                    <button onClick={empezarEdicionMascota}>Editar Mascota</button>
 
                     <h3>Comentarios</h3>
                     {errorComentario && <p>{errorComentario}</p>}
