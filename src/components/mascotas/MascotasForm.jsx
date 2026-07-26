@@ -24,8 +24,8 @@ function MascotasForm({ onAdd }) {
             setTipoMascota(response.data.tipo_animal);
             setSexo(response.data.sexo);
             setTamano(response.data.tamano);
-        } catch (error) {
-
+        } catch {
+            // Error silencioso de ESLint (no bloquea el formulario)
         }
     }
 
