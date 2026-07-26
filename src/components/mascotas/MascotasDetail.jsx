@@ -105,11 +105,17 @@ function MascotasDetail() {
     }
 
     const guardarEdicionMascota = async () => {
+
+        if (edadEdit === "" || razaEdit === "") {
+            setErrorEdicionMascota("Edad o raza no pueden estar vacias");
+            return;
+        }
+
         try {
             await mascotasApi.patch(`mascotas/${id}/`, {
                 nombre: nombreEdit,
                 descripcion: descripcionEdit,
-                edad: edadEdit ==="" ? null: edadEdit,
+                edad: edadEdit,
                 raza: razaEdit,
                 tipo_animal: tipoAnimalEdit,
                 sexo: sexoEdit,
