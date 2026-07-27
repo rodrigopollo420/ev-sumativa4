@@ -4,6 +4,8 @@ const traducciones = {
     "This field may not be null.": "Este campo no puede ser nulo.",
     "No file was submitted.": "No se envió ningún archivo.",
     "Enter a valid integer.": "Introduce un número entero válido.",
+    "The submitted data was not a file. Check the encoding type on the form.": "No se envió un archivo válido. Selecciona una imagen antes de registrar.",
+
 }
 
 function traducirMensaje(mensaje) {
