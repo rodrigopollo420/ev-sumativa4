@@ -1,3 +1,15 @@
+const traducciones = {
+    "This field may not be blank.": "Este campo no puede estar vacío.",
+    "This field is required.": "Este campo es requerido.",
+    "This field may not be null.": "Este campo no puede ser nulo.",
+    "No file was submitted.": "No se envió ningún archivo.",
+    "Enter a valid integer.": "Introduce un número entero válido.",
+}
+
+function traducirMensaje(mensaje) {
+    return traducciones[mensaje] ?? mensaje;
+}
+
 export function obtenerMensajeError(error) {
     const status = error.response?.status;
     const data = error.response?.data;
@@ -12,7 +24,7 @@ export function obtenerMensajeError(error) {
             const primerMensaje = Array.isArray(data[primerCampo])
             ? data[primerCampo][0]
             : data[primerCampo];
-            return `Error de validación: ${primerMensaje}`;
+            return `Error de validación: ${traducirMensaje(primerMensaje)}`;
         }
         return "Los datos enviados son inválidos.";
     }
