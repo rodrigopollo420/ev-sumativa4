@@ -353,3 +353,34 @@ body {
     letter-spacing: 0.05em;
     display: block;
 }
+
+.footer-mascotas {
+    text-align: center;
+    background-color: var(--color-borde);
+    color: var(--color-papel);
+    font-family: var(--font-cuerpo);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-top: 4px solid var(--color-cinta);
+    margin-top: 2rem;
+}
+
+.footer-mascotas span {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.7rem;
+    display: block;
+    margin-top: 0.25rem;
+    opacity: 0.75;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-contenido {
+    flex: 1;
+}
